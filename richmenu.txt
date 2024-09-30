@@ -1,0 +1,2 @@
+richmenu-191bba7b9e46c227281974d34f2b975e --- main
+richmenu-f98d8fc2e81a2c4556ee7c3bcfd69bda ---bot
