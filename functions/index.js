@@ -13,6 +13,7 @@ const firebase = require('./util/firebase.util');
 const flex = require('./message/flex');
 const googlesheets = require('./util/sheets_api');
 const googlesheets_addleave = require('./util/sheet_api_addLeave');
+const gemini = require('./util/geminiAPI');
 
 
 exports.helloWorld = onRequest((request, response) => {
@@ -30,8 +31,6 @@ function validateWebhook(request, response) {
 
 exports.webhook = onRequest(async (request, response) => {
     validateWebhook(request, response)
-
-
 
     const events = request.body.events
     for (const event of events) {
@@ -118,7 +117,7 @@ exports.webhook = onRequest(async (request, response) => {
                     } else if (textMessage === "ประกาศและแบบฟอร์ม") {
                         await line.replyWithStateless(event.replyToken, [{
                             "type": "flex",
-                            "altText": "Flex Message",
+                            "altText": "ประกาศและแบบฟอร์ม",
                             "contents": {
                               "type": "carousel",
                               "contents": [
@@ -228,7 +227,7 @@ exports.webhook = onRequest(async (request, response) => {
                         await line.replyWithStateless(event.replyToken, [{
                             "type": "imagemap",
                             "baseUrl": "https://ex10.tech/store/v1/public/content/upload/imagemap/f85b9d67-905c-48c5-ad6c-c32f12f18f9e",
-                            "altText": "Imagemap generator By EX10",
+                            "altText": "เรียนรู้ออนไลน์",
                             "baseSize": {
                                 "width": 1040,
                                 "height": "585"
@@ -294,7 +293,7 @@ exports.webhook = onRequest(async (request, response) => {
                         await line.replyWithStateless(event.replyToken, [{
                             "type": "imagemap",
                             "baseUrl": "https://ex10.tech/store/v1/public/content/upload/imagemap/a4090660-aec2-4b59-8ac5-744d8d378d7a",
-                            "altText": "Imagemap generator By EX10",
+                            "altText": "เมนูหลัก",   
                             "baseSize": {
                                 "width": 1040,
                                 "height": "701"
@@ -380,7 +379,7 @@ exports.webhook = onRequest(async (request, response) => {
                         await line.replyWithStateless(event.replyToken, [{
                             "type": "imagemap",
                             "baseUrl": "https://ex10.tech/store/v1/public/content/upload/imagemap/abdd4ee2-51f9-48a2-9d0c-92a1e760220a",
-                            "altText": "Imagemap generator By EX10",
+                            "altText": "เมนูบอท",
                             "baseSize": {
                                 "width": 1040,
                                 "height": "701"
@@ -528,8 +527,8 @@ exports.webhook = onRequest(async (request, response) => {
                                         "imageUrl": "",
                                         "action": {
                                             "type": "message",
-                                            "label": "เพิ่มการลา",
-                                            "text": "เพิ่มการลา"
+                                            "label": "เพิ่มวันลา",
+                                            "text": "เพิ่มวันลา"
                                         }
                                     },
                                     {
@@ -592,228 +591,54 @@ exports.webhook = onRequest(async (request, response) => {
                             }  
                         }])
                     }
-                    } else if (textMessage === "\"ค่ารักษาพยาบาล\"") {
-
-                        await line.replyWithStateless(event.replyToken, [{
-                            "type": "flex",
-                            "altText": "สวัสดิการ",
-                            "contents": {
-                                "type": "bubble",
-                                "hero": {
-                                    "type": "image",
-                                    "url": "https://bucket.ex10.tech/images/9f5559f6-819c-11ef-ab4d-0242ac12000e/originalContentUrl.png",
-                                    "size": "full",
-                                    "aspectRatio": "20:13",
-                                    "aspectMode": "cover"
-                                },
-                                "body": {
-                                    "type": "box",
-                                    "layout": "vertical",
-                                    "contents": [
-                                        {
-                                            "type": "text",
-                                            "text": "💗 ใส่ใจทุกเรื่องสุขภาพ! 💗",
-                                            "weight": "bold",
-                                            "size": "xl",
-                                            "margin": "md"
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "พนักงานของเราสามารถรับสิทธิ์เบิกค่ารักษาพยาบาลได้ทั้งในและนอกโรงพยาบาล ไม่ว่าจะเป็นการรักษาทั่วไป การตรวจสุขภาพประจำปี หรือกรณีฉุกเฉิน 🏥",
-                                            "size": "sm",
-                                            "color": "#666666",
-                                            "wrap": true
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "💡 สิทธิ์พิเศษ:",
-                                            "weight": "bold",
-                                            "size": "md",
-                                            "margin": "lg"
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "• ค่ารักษาอุบัติเหตุ 💥\n• ค่ารักษาโรคเรื้อรัง 🤒\n• ค่ารักษาฟัน 🦷 และการตรวจสุขภาพฟัน",
-                                            "size": "sm",
-                                            "color": "#666666",
-                                            "wrap": true
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "📞 หากมีข้อสงสัยเพิ่มเติม สามารถติดต่อฝ่ายทรัพยากรบุคคลได้ที่เบอร์ 081-619-5147",
-                                            "size": "sm",
-                                            "color": "#666666",
-                                            "wrap": true,
-                                            "margin": "md"
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "ดูแลสุขภาพของคุณในทุกช่วงเวลา เพราะเราพร้อมที่จะอยู่เคียงข้างคุณเสมอ! 😊",
-                                            "size": "sm",
-                                            "color": "#666666",
-                                            "wrap": true,
-                                            "margin": "md"
-                                        },
-                                        {
-                                            "type": "separator",
-                                            "margin": "xl"
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "margin": "md",
-                                            "contents": [
-                                                {
-                                                    "type": "button",
-                                                    "action": {
-                                                        "type": "message",
-                                                        "label": "กลับไปยังเมนูหลัก",
-                                                        "text": "สวัสดิการ"
-                                                    },
-                                                    "style": "primary",
-                                                    "color": "#ff66c4",
-                                                    "margin": "sm"
-                                                }, {
-                                                    "type": "button",
-                                                    "action": {
-                                                        "type": "message",
-                                                        "label": "ค่ารักษาฟันและเหงือก",
-                                                        "text": "\"ค่ารักษาฟันและเหงือก\""
-                                                    },
-                                                    "style": "primary",
-                                                    "color": "#ff66c4",
-                                                    "margin": "sm"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                        ])
-                    } else if (textMessage === "\"ค่ารักษาฟันและเหงือก\"") {
-
-                        await line.replyWithStateless(event.replyToken, [{
-                            "type": "flex",
-                            "altText": "ค่ารักษาฟันและเหงือก",
-                            "contents": {
-                                "type": "bubble",
-                                "hero": {
-                                    "type": "image",
-                                    "url": "https://bucket.ex10.tech/images/b4dadf62-819b-11ef-ab4d-0242ac12000e/originalContentUrl.png",
-                                    "size": "full",
-                                    "aspectRatio": "20:13",
-                                    "aspectMode": "cover"
-                                },
-                                "body": {
-                                    "type": "box",
-                                    "layout": "vertical",
-                                    "contents": [
-                                        {
-                                            "type": "text",
-                                            "text": "🦷 ค่ารักษาฟันและเหงือก 🦷",
-                                            "weight": "bold",
-                                            "size": "xl",
-                                            "margin": "md"
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "พนักงานสามารถเบิกค่ารักษาฟันและเหงือกได้ ไม่ว่าจะเป็นการตรวจสุขภาพฟัน การอุดฟัน หรือการถอนฟัน 🏥",
-                                            "size": "sm",
-                                            "color": "#666666",
-                                            "wrap": true
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "💡 สิทธิ์พิเศษ:",
-                                            "weight": "bold",
-                                            "size": "md",
-                                            "margin": "lg"
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "• ค่ารักษาฟัน 🦷\n• ค่ารักษาโรคเหงือก 🦷\n• ค่าตรวจสุขภาพฟันประจำปี",
-                                            "size": "sm",
-                                            "color": "#666666",
-                                            "wrap": true
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "📞 หากมีข้อสงสัยเพิ่มเติม สามารถติดต่อฝ่ายทรัพยากรบุคคลได้ที่เบอร์ 081-619-5147",
-                                            "size": "sm",
-                                            "color": "#666666",
-                                            "wrap": true,
-                                            "margin": "md"
-                                        },
-                                        {
-                                            "type": "text",
-                                            "text": "ดูแลสุขภาพช่องปากของคุณให้ดี เพื่อรอยยิ้มที่สวยงามและมั่นใจ! 😊",
-                                            "size": "sm",
-                                            "color": "#666666",
-                                            "wrap": true,
-                                            "margin": "md"
-                                        },
-                                        {
-                                            "type": "separator",
-                                            "margin": "xl"
-                                        },
-                                        {
-                                            "type": "box",
-                                            "layout": "vertical",
-                                            "margin": "md",
-                                            "contents": [
-                                                {
-                                                    "type": "button",
-                                                    "action": {
-                                                        "type": "message",
-                                                        "label": "กลับไปยังเมนูหลัก",
-                                                        "text": "สวัสดิการ"
-                                                    },
-                                                    "style": "primary",
-                                                    "color": "#ff66c4",
-                                                    "margin": "sm"
-                                                },
-                                                {
-                                                    "type": "button",
-                                                    "action": {
-                                                        "type": "message",
-                                                        "label": "ค่ารักษาพยาบาล",
-                                                        "text": "\"ค่ารักษาพยาบาล\""
-                                                    },
-                                                    "style": "primary",
-                                                    "color": "#ff66c4",
-                                                    "margin": "sm"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            }
-                        }])
-
                     } else if (hollydayKeywords.some(keyword => textMessage.includes(keyword))) {
-
-                        await line.replyWithStateless(event.replyToken, [{
-                            "type": "imagemap",
-                            "baseUrl": "https://ex10.tech/store/v1/public/content/upload/imagemap/d8277a9a-eaea-4b31-b608-c09b99114277",
-                            "altText": "Imagemap generator By EX10",
-                            "baseSize": {
-                                "width": 1040,
-                                "height": "1040"
+                        await line.replyWithStateless(event.replyToken, [
+                            {
+                                "type": "imagemap",
+                                "baseUrl": "https://ex10.tech/store/v1/public/content/upload/imagemap/d8277a9a-eaea-4b31-b608-c09b99114277",
+                                "altText": "วันหยุด",
+                                "baseSize": {
+                                    "width": 1040,
+                                    "height": 1040
+                                },
+                                "actions": [
+                                    {
+                                        "type": "message",
+                                        "area": {
+                                            "x": 906,
+                                            "y": 16,
+                                            "width": 1,
+                                            "height": 1
+                                        },
+                                        "text": "."
+                                    }
+                                ]
                             },
-                            "actions": [
-                                {
-                                    "type": "message",
-                                    "area": {
-                                        "x": 906,
-                                        "y": 16,
-                                        "width": 1,
-                                        "height": 1
-                                    },
-                                    "text": "."
+                            {
+                                "type": "text",
+                                "text": "คุณต้องการทำอะไรต่อ?",
+                                "quickReply": {
+                                    "items": [
+                                        {
+                                            "type": "action",
+                                            "action": {
+                                                "type": "message",
+                                                "label": "เพิ่มวันลา",
+                                                "text": "เพิ่มวันลา"
+                                            }
+                                        },
+                                        {
+                                            "type": "action",
+                                            "action": {
+                                                "type": "message",  // แก้ไขเป็น message type
+                                                "label": "อื่นๆ",
+                                                "text": "อื่นๆ"
+                                            }
+                                        }
+                                    ]
                                 }
-                            ]
-                        }])
+                            }
+                        ]);
                     } else if (timetoworkKeywords.some(keyword => textMessage.includes(keyword))) {
 
                         await line.replyWithStateless(event.replyToken, [{
@@ -859,7 +684,7 @@ exports.webhook = onRequest(async (request, response) => {
                     } else if (DressingKeywords.some(keyword => textMessage.includes(keyword))) {
                         await line.replyWithStateless(event.replyToken, [{
                             "type": "flex",
-                            "altText": "Flex Message",
+                            "altText": "การแต่งตัวในที่ทำงาน",
                             "contents": {
                                 "type": "carousel",
                                 "contents": [
@@ -939,7 +764,7 @@ exports.webhook = onRequest(async (request, response) => {
                     } else if (contactHrKeywords.some(keyword => textMessage.includes(keyword))) {
                         await line.replyWithStateless(event.replyToken, [{
                             "type": "text",
-                            "text": "ถ้าคุณมีคำถามหรือต้องการพูดคุยกับเรา โทรติดต่อหาเราได้เลยนะครับ 🥰\n\n☎️ ฝ่ายทรัพยากรบุคคล\n081-619-5147\n\nเราพร้อมที่จะช่วยคุณทุกเมื่อ"
+                            "text": "ถ้าคุณมีคำถามหรือต้องการพูดคุยกับเรา โทรติดต่อหาเราได้เลยนะครับ 🥰\n\n☎️ ฝ่ายทรัพยากรบุคคล\n088-888-8888\n\nเราพร้อมที่จะช่วยคุณทุกเมื่อ"
                         }, {
                             "type": "text",
                             "text": "คุณต้องการทำอะไรต่อ?",
@@ -1172,7 +997,8 @@ exports.webhook = onRequest(async (request, response) => {
                     } else {
 
                         googlesheets_addleave.forwardGoogleSheets2(request),
-                        googlesheets.forwardGoogleSheets(request)
+                        googlesheets.forwardGoogleSheets(request),
+                        gemini.forwardGemini(request)
                         //dialogflow.forwardDialogflow(request) // ตรวจสอบให้แน่ใจว่านี่คือฟังก์ชันที่ถูกต้อง
 
                     }
